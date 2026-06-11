@@ -1,24 +1,25 @@
-require("dotenv").config(); // Add this at the very top
-
+require("dotenv").config();
 const express = require("express");
 const Groq = require("groq-sdk");
 const { tavily } = require("@tavily/core");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+}));
+
 app.use(express.json());
 
-// Keys now come from .env
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
-<<<<<<< HEAD
 app.get("/", (req, res) => {
   res.send("Backend is running ✅");
 });
-=======
->>>>>>> e74840694ca04a91f39877e5047e4b0e1a01f69b
+
 app.post("/generate", async (req, res) => {
   const { topic, contentType } = req.body;
 
